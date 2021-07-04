@@ -125,6 +125,25 @@ class Api(object):
             data=data)
         return status, response
 
+    def put(self,
+            method: str,
+            data: dict,
+            store: str = None) -> tuple[int, dict]:
+        """
+        Send data via PUT for a Magento object
+
+        :param method: method name to query
+        :param data: JSON data to send to the request
+        :param store: store codename
+        :return:
+        """
+        status, response = self.request(
+            method=f'{method}',
+            verb='PUT',
+            store=store,
+            data=data)
+        return status, response
+
     def search(self,
                method: str,
                filters: list[list[Filter]],
