@@ -19,7 +19,7 @@
 ##
 
 APP_NAME = 'PyMagento_REST'
-APP_VERSION = '0.1.0'
+APP_VERSION = '0.1.1'
 APP_DESCRIPTION = 'REST API for Magento'
 APP_ID = 'pymagento-rest.muflone.com'
 APP_URL = 'http://www.muflone.com/pymagento-rest/'
