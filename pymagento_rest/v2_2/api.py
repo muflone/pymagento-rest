@@ -21,6 +21,8 @@
 import requests
 from typing import Optional
 
+from pymagento_rest import Filter
+
 
 class Api(object):
     """
@@ -71,6 +73,97 @@ class Api(object):
         """
         status, response = self.request(
             method=f'{method}/{entity_id}',
+            verb='GET',
+            store=store)
+        return status, response
+
+    def search(self,
+               method: str,
+               filters: list[list[Filter]],
+               page_size: int = 0,
+               current_page: int = 0,
+               store=None) -> tuple[int, dict]:
+        """
+        Search data from a Magento method
+
+        :param method: method name to query
+        :param filters: list of lists of filters
+        :param page_size: pagination size
+        :param current_page: current page number
+        :param store: store codename
+        :return:
+        """
+        def search_criteria(group_id: int,
+                            filter_id: int,
+                            field: str,
+                            condition: str,
+                            value: str) -> str:
+            """
+            Build a Magento search criteria for the filter and field using
+            a specific field name, condition and value
+            :param group: index of the group
+            :param filter_id: index of the filter
+            :param field: field name
+            :param condition: field condition
+            :param value: field value
+            :return: string with the search criteria
+            """
+
+            def new_option(group_id: int,
+                           filter_id: int,
+                           field: str,
+                           value: str) -> str:
+                """
+                Build a Magento search criteria for the filter and field using
+                a specific field name
+                :param group_id: index of the group
+                :param filter_id: index of the filter
+                :param field: field name
+                :param value: field value
+                :return: string with the search criteria
+                """
+                return (f'searchCriteria[filter_groups][{group_id}]'
+                        f'[filters][{filter_id}][{field}]={value}')
+
+            return ('{FIELD}&{CONDITION}&{VALUE}'.format(
+                FIELD=new_option(group_id=group_id,
+                                 filter_id=filter_id,
+                                 field='field',
+                                 value=field),
+                CONDITION=new_option(group_id=group_id,
+                                     filter_id=filter_id,
+                                     field='condition_type',
+                                     value=condition)
+                if condition else '',
+                VALUE=new_option(group_id=group_id,
+                                 filter_id=filter_id,
+                                 field='value',
+                                 value=value)
+            ))
+        # Build search filters chain
+        search_filters = ''
+        for group_id, subfilters in enumerate(filters):
+            for filter_id, filter in enumerate(subfilters):
+                if search_filters:
+                    search_filters += '&'
+                search_filters += search_criteria(
+                    group_id=group_id,
+                    filter_id=filter_id,
+                    field=filter.field,
+                    condition=filter.compare_type,
+                    value=filter.value)
+        # Add page size
+        if page_size:
+            if search_filters:
+                search_filters += '&'
+            search_filters += f'searchCriteria[pageSize]={page_size}'
+        # Add current_page
+        if current_page:
+            if search_filters:
+                search_filters += '&'
+            search_filters += f'searchCriteria[currentPage]={current_page}'
+        status, response = self.request(
+            method=f'{method}?{search_filters}',
             verb='GET',
             store=store)
         return status, response

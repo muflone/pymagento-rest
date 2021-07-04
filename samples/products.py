@@ -20,6 +20,7 @@
 
 import os
 
+from pymagento_rest import CompareType, Filter
 from pymagento_rest.v2_2 import Api
 
 
@@ -30,3 +31,17 @@ magento = Api(endpoint=os.environ['MAGENTO_ENDPOINT'],
 status, results = magento.get(method='products',
                               entity_id='41416')
 print('get', status, results)
+# Filter by SKU
+filters = [[Filter(field='sku',
+                   compare_type=CompareType.CONTAINS,
+                   value='414%')],
+           [Filter(field='sku',
+                   compare_type=CompareType.NOT_EQUAL,
+                   value='41416')]
+           ]
+# Search some records
+results = magento.search(method='products',
+                         filters=filters,
+                         page_size=10,
+                         current_page=1)
+print('search', len(results), results)
