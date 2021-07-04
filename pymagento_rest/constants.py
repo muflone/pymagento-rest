@@ -18,7 +18,7 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ##
 
-APP_NAME = 'PyMagento REST'
+APP_NAME = 'PyMagento_REST'
 APP_VERSION = '0.1.0'
 APP_DESCRIPTION = 'REST API for Magento'
 APP_ID = 'pymagento-rest.muflone.com'
