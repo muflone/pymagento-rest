@@ -106,6 +106,25 @@ class Api(object):
             store=store)
         return status, response
 
+    def post(self,
+             method: str,
+             data: dict,
+             store: str = None) -> tuple[int, dict]:
+        """
+        Post data for a Magento object
+
+        :param method: method name to query
+        :param data: JSON data to send to the request
+        :param store: store codename
+        :return:
+        """
+        status, response = self.request(
+            method=f'{method}',
+            verb='POST',
+            store=store,
+            data=data)
+        return status, response
+
     def search(self,
                method: str,
                filters: list[list[Filter]],

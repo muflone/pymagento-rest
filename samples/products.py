@@ -31,6 +31,11 @@ magento = Api(endpoint=os.environ['MAGENTO_ENDPOINT'],
 status, results = magento.get(method='products',
                               entity_id='41416')
 print('get', status, results)
+# Post a record
+results['price'] += 100.11
+status, results = magento.post(method='products',
+                               data={'product': results})
+print('post', status, results)
 # Filter by SKU
 filters = [[Filter(field='sku',
                    compare_type=CompareType.CONTAINS,
