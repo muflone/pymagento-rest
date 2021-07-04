@@ -19,9 +19,6 @@
 ##
 
 import requests
-from typing import Optional
-
-from pymagento_rest.filter import Filter
 
 
 class Api(object):
