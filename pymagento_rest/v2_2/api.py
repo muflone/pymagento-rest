@@ -73,3 +73,14 @@ class Api(object):
             verb='GET',
             store=store)
         return status, response
+
+    def new_attribute(self, attribute_name: str, value: str):
+        """
+        Return a new attribute
+
+        :param attribute_name: new attribute name
+        :param value: new value for the attribute
+        :return: dictionary with attribute and value
+        """
+        return {'attribute_code': attribute_name,
+                'value': value}
