@@ -18,5 +18,23 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ##
 
-from .compare_type import CompareType                              # noqa: F401
-from .constants import APP_VERSION as __version__                  # noqa: F401
+class CompareType(object):
+    """
+    Comparison types used in Magento filters
+    """
+    EQUAL = 'eq'
+    MORE_EQUAL = 'moreq'
+    NOT_EQUAL = 'neq'
+    GREATER = 'gt'
+    GREATER_EQ = 'gteq'
+    LOWER = 'lt'
+    LOWER_EQ = 'lteq'
+    IN = 'in'
+    NOT_IN = 'nin'
+    IN_SET = 'finset'
+    NOT_IN_SET = 'nfinset'
+    FROM = 'from'
+    TO = 'to'
+    CONTAINS = 'like'
+    NULL = 'null'
+    NOT_NULL = 'notnull'
