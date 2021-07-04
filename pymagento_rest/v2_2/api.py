@@ -28,15 +28,17 @@ class Api(object):
     """
     Magento v2.2 REST API
     """
-    def __init__(self, endpoint, secret):
+    def __init__(self,
+                 endpoint: str,
+                 secret: str):
         self.__endpoint = endpoint
         self.__secret = secret
 
     def request(self,
-                method,
-                verb='GET',
-                store=None,
-                data=None) -> tuple[int, dict]:
+                method: str,
+                verb: str = 'GET',
+                store: str = None,
+                data: dict = None) -> tuple[int, dict]:
         """
         Send a remote request to the endpoint using the specified method
         and arguments
@@ -61,7 +63,7 @@ class Api(object):
 
     def all(self,
             method: str,
-            store=None,
+            store: str = None,
             page_size: int = 0,
             current_page: int = 0) -> tuple[int, dict]:
         """
@@ -89,7 +91,7 @@ class Api(object):
     def get(self,
             method: str,
             entity_id: str,
-            store=None) -> tuple[int, dict]:
+            store: str = None) -> tuple[int, dict]:
         """
         Get data from a Magento object
 
@@ -109,7 +111,7 @@ class Api(object):
                filters: list[list[Filter]],
                page_size: int = 0,
                current_page: int = 0,
-               store=None) -> tuple[int, dict]:
+               store: str = None) -> tuple[int, dict]:
         """
         Search data from a Magento method
 
@@ -200,7 +202,7 @@ class Api(object):
                       simple_filter: Filter,
                       page_size: int = 0,
                       current_page: int = 0,
-                      store=None) -> tuple[int, dict]:
+                      store: str = None) -> tuple[int, dict]:
         """
         Search data from a Magento method using a single filter
 
@@ -217,7 +219,9 @@ class Api(object):
                            current_page=current_page,
                            store=store)
 
-    def new_attribute(self, attribute_name: str, value: str):
+    def new_attribute(self,
+                      attribute_name: str,
+                      value: str):
         """
         Return a new attribute
 
