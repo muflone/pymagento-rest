@@ -54,3 +54,8 @@ results = magento.search_simple(method='products',
                                 page_size=10,
                                 current_page=1)
 print('search_simple', len(results), results)
+# Show all products
+results = magento.all(method='products',
+                      page_size=100,
+                      current_page=1)
+print('all', len(results), results)

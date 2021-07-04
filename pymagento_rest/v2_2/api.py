@@ -59,6 +59,33 @@ class Api(object):
         # Get response
         return response.status_code, response.json()
 
+    def all(self,
+            method: str,
+            store=None,
+            page_size: int = 0,
+            current_page: int = 0) -> tuple[int, dict]:
+        """
+        Get all the rows from a Magento object
+
+        :param method: method name to query
+        :param store: store codename
+        :return:
+        """
+        search_filters = ''
+        # Add page size
+        if page_size:
+            search_filters += f'searchCriteria[pageSize]={page_size}'
+        # Add current_page
+        if current_page:
+            if search_filters:
+                search_filters += '&'
+            search_filters += f'searchCriteria[currentPage]={current_page}'
+        status, response = self.request(
+            method=f'{method}?{search_filters}',
+            verb='GET',
+            store=store)
+        return status, response
+
     def get(self,
             method: str,
             entity_id: str,
