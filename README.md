@@ -2,8 +2,8 @@
 
 [![Travis CI Build Status](https://img.shields.io/travis/muflone/pymagento-rest/master.svg)](https://www.travis-ci.com/github/muflone/pymagento-rest)
 [![CircleCI Build Status](https://img.shields.io/circleci/project/github/muflone/pymagento-rest/master.svg)](https://circleci.com/gh/muflone/pymagento-rest)
-[![PyPI - Version](https://img.shields.io/pypi/v/PyMagentoRest.svg)](https://pypi.org/project/PyMagentoRest/)
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/PyMagentoRest.svg)](https://pypi.org/project/PyMagentoRest/)
+[![PyPI - Version](https://img.shields.io/pypi/v/PyMagento-REST.svg)](https://pypi.org/project/PyMagento-REST/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/PyMagento-REST.svg)](https://pypi.org/project/PyMagento-REST/)
 
 **Description:** REST API for Magento
 
