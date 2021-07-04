@@ -59,7 +59,7 @@ class Api(object):
         # Get response
         return response.status_code, response.json()
 
-     def get(self,
+    def get(self,
             method: str,
             entity_id: str,
             store=None) -> tuple[int, dict]:
