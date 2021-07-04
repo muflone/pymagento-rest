@@ -18,6 +18,19 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ##
 
-from .compare_type import CompareType                              # noqa: F401
-from .constants import APP_VERSION as __version__                  # noqa: F401
-from .filter import Filter                                         # noqa: F401
+from typing import Any
+
+from .compare_type import CompareType
+
+
+class Filter(object):
+    """
+    A filter object used by Magento
+    """
+    def __init__(self,
+                 field: str,
+                 compare_type: CompareType,
+                 value: Any):
+        self.field = field
+        self.compare_type = compare_type
+        self.value = value
