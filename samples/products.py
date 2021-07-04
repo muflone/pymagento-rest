@@ -45,3 +45,12 @@ results = magento.search(method='products',
                          page_size=10,
                          current_page=1)
 print('search', len(results), results)
+# Search some records using simple filter
+results = magento.search_simple(method='products',
+                                simple_filter=Filter(
+                                    field='sku',
+                                    compare_type=CompareType.EQUAL,
+                                    value='41416'),
+                                page_size=10,
+                                current_page=1)
+print('search', len(results), results)

@@ -168,6 +168,28 @@ class Api(object):
             store=store)
         return status, response
 
+    def search_simple(self,
+                      method: str,
+                      simple_filter: Filter,
+                      page_size: int = 0,
+                      current_page: int = 0,
+                      store=None) -> tuple[int, dict]:
+        """
+        Search data from a Magento method using a single filter
+
+        :param method: method name to query
+        :param filter: filter for querying the data
+        :param page_size: pagination size
+        :param current_page: current page number
+        :param store: store codename
+        :return:
+        """
+        return self.search(method=method,
+                           filters=[[simple_filter]],
+                           page_size=page_size,
+                           current_page=current_page,
+                           store=store)
+
     def new_attribute(self, attribute_name: str, value: str):
         """
         Return a new attribute
