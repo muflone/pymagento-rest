@@ -53,4 +53,4 @@ results = magento.search_simple(method='products',
                                     value='41416'),
                                 page_size=10,
                                 current_page=1)
-print('search', len(results), results)
+print('search_simple', len(results), results)
