@@ -28,5 +28,5 @@ magento = Api(endpoint=os.environ['MAGENTO_ENDPOINT'],
               secret=os.environ['MAGENTO_SECRET'])
 # Get a record by ID
 status, results = magento.get(method='products',
-                      entity_id='41416')
+                              entity_id='41416')
 print('get', status, results)
