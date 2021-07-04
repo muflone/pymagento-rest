@@ -19,6 +19,7 @@
 ##
 
 import requests
+from typing import Optional
 
 
 class Api(object):
@@ -84,3 +85,37 @@ class Api(object):
         """
         return {'attribute_code': attribute_name,
                 'value': value}
+
+    def find_custom_attribute(self,
+                              data: dict[str],
+                              attribute_name: str) -> Optional[dict[str]]:
+        """
+        Find an attribute into the custom_attributes from a Magento response
+
+        :param data: Magento response data dictionary
+        :param attribute_name: attribute name to lookup
+        :return: dictionary item for found value or None
+        """
+        results = None
+        for attribute in data['custom_attributes']:
+            if attribute['attribute_code'] == attribute_name:
+                results = attribute
+                break
+        return results
+
+    def find_custom_attribute_value(self,
+                                    data: dict[str],
+                                    attribute_name: str) -> Optional[str]:
+        """
+        Find an attribute value into the custom_attributes from
+        a Magento response
+
+        :param data: Magento response data dictionary
+        :param attribute_name: attribute name to lookup
+        :return: found value or None
+        """
+        results = self.find_custom_attribute(data=data,
+                                             attribute_name=attribute_name)
+        if results:
+            results = results['value']
+        return results
