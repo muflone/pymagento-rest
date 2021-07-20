@@ -18,6 +18,7 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ##
 
+import json
 import requests
 from typing import Optional
 
@@ -59,7 +60,11 @@ class Api(object):
                                     headers=headers,
                                     json=data)
         # Get response
-        return response.status_code, response.json()
+        try:
+            json_results = response.json()
+        except json.decoder.JSONDecodeError:
+            json_results = None
+        return response.status_code, json_results
 
     def all(self,
             method: str,
