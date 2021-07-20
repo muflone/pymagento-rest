@@ -39,7 +39,7 @@ class Api(object):
                 method: str,
                 verb: str = 'GET',
                 store: str = None,
-                data: dict = None) -> tuple[int, dict]:
+                data: dict = None) -> tuple[int, dict, str]:
         """
         Send a remote request to the endpoint using the specified method
         and arguments
@@ -64,13 +64,13 @@ class Api(object):
             json_results = response.json()
         except json.decoder.JSONDecodeError:
             json_results = None
-        return response.status_code, json_results
+        return response.status_code, json_results, response.text
 
     def all(self,
             method: str,
             store: str = None,
             page_size: int = 0,
-            current_page: int = 0) -> tuple[int, dict]:
+            current_page: int = 0) -> tuple[int, dict, str]:
         """
         Get all the rows from a Magento object
 
@@ -87,16 +87,15 @@ class Api(object):
             if search_filters:
                 search_filters += '&'
             search_filters += f'searchCriteria[currentPage]={current_page}'
-        status, response = self.request(
-            method=f'{method}?{search_filters}',
-            verb='GET',
-            store=store)
-        return status, response
+        # Return results
+        return self.request(method=f'{method}?{search_filters}',
+                            verb='GET',
+                            store=store)
 
     def get(self,
             method: str,
             entity_id: str,
-            store: str = None) -> tuple[int, dict]:
+            store: str = None) -> tuple[int, dict, str]:
         """
         Get data from a Magento object
 
@@ -105,16 +104,14 @@ class Api(object):
         :param store: store codename
         :return:
         """
-        status, response = self.request(
-            method=f'{method}/{entity_id}',
-            verb='GET',
-            store=store)
-        return status, response
+        return self.request(method=f'{method}/{entity_id}',
+                            verb='GET',
+                            store=store)
 
     def post(self,
              method: str,
              data: dict,
-             store: str = None) -> tuple[int, dict]:
+             store: str = None) -> tuple[int, dict, str]:
         """
         Post data for a Magento object
 
@@ -123,17 +120,15 @@ class Api(object):
         :param store: store codename
         :return:
         """
-        status, response = self.request(
-            method=f'{method}',
-            verb='POST',
-            store=store,
-            data=data)
-        return status, response
+        return self.request(method=f'{method}',
+                            verb='POST',
+                            store=store,
+                            data=data)
 
     def put(self,
             method: str,
             data: dict,
-            store: str = None) -> tuple[int, dict]:
+            store: str = None) -> tuple[int, dict, str]:
         """
         Send data via PUT for a Magento object
 
@@ -142,19 +137,17 @@ class Api(object):
         :param store: store codename
         :return:
         """
-        status, response = self.request(
-            method=f'{method}',
-            verb='PUT',
-            store=store,
-            data=data)
-        return status, response
+        return self.request(method=f'{method}',
+                            verb='PUT',
+                            store=store,
+                            data=data)
 
     def search(self,
                method: str,
                filters: list[list[Filter]],
                page_size: int = 0,
                current_page: int = 0,
-               store: str = None) -> tuple[int, dict]:
+               store: str = None) -> tuple[int, dict, str]:
         """
         Search data from a Magento method
 
@@ -234,18 +227,16 @@ class Api(object):
             if search_filters:
                 search_filters += '&'
             search_filters += f'searchCriteria[currentPage]={current_page}'
-        status, response = self.request(
-            method=f'{method}?{search_filters}',
-            verb='GET',
-            store=store)
-        return status, response
+        return self.request(method=f'{method}?{search_filters}',
+                            verb='GET',
+                            store=store)
 
     def search_simple(self,
                       method: str,
                       simple_filter: Filter,
                       page_size: int = 0,
                       current_page: int = 0,
-                      store: str = None) -> tuple[int, dict]:
+                      store: str = None) -> tuple[int, dict, str]:
         """
         Search data from a Magento method using a single filter
 

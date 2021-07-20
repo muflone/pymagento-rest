@@ -28,14 +28,14 @@ from pymagento_rest.v2_2 import Api
 magento = Api(endpoint=os.environ['MAGENTO_ENDPOINT'],
               secret=os.environ['MAGENTO_SECRET'])
 # Get a record by ID
-status, results = magento.get(method='products',
-                              entity_id='41416')
-print('get', status, results)
+status, json_data, text_data = magento.get(method='products',
+                                           entity_id='41416')
+print('get', status, len(text_data), json_data)
 # Post a record
-results['price'] += 100.11
-status, results = magento.post(method='products',
-                               data={'product': results})
-print('post', status, results)
+json_data['price'] += 100.11
+status, json_data, text_data = magento.post(method='products',
+                                            data={'product': json_data})
+print('post', status, len(text_data), json_data)
 # Filter by SKU
 filters = [[Filter(field='sku',
                    compare_type=CompareType.CONTAINS,
@@ -45,22 +45,22 @@ filters = [[Filter(field='sku',
                    value='41416')]
            ]
 # Search some records
-results = magento.search(method='products',
-                         filters=filters,
-                         page_size=10,
-                         current_page=1)
-print('search', len(results), results)
+status, json_data, text_data = magento.search(method='products',
+                                              filters=filters,
+                                              page_size=10,
+                                              current_page=1)
+print('search', len(text_data), json_data)
 # Search some records using simple filter
-results = magento.search_simple(method='products',
-                                simple_filter=Filter(
-                                    field='sku',
-                                    compare_type=CompareType.EQUAL,
-                                    value='41416'),
-                                page_size=10,
-                                current_page=1)
-print('search_simple', len(results), results)
+status, json_data, text_data = magento.search_simple(
+    method='products',
+    simple_filter=Filter(field='sku',
+                         compare_type=CompareType.EQUAL,
+                         value='41416'),
+    page_size=10,
+    current_page=1)
+print('search_simple', len(text_data), json_data)
 # Show all products
-results = magento.all(method='products',
-                      page_size=100,
-                      current_page=1)
-print('all', len(results), results)
+status, json_data, text_data = magento.all(method='products',
+                                           page_size=100,
+                                           current_page=1)
+print('all', len(text_data), json_data)
