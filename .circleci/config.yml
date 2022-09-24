@@ -1,9 +1,10 @@
 version: 2.1
 
 orbs:
-  # The python orb contains a set of prepackaged CircleCI configuration you can use repeatedly in your configuration files
-  # Orb commands and jobs help you with common scripting around a language/tool
-  # so you dont have to copy and paste it everywhere.
+  # The python orb contains a set of prepackaged CircleCI configuration you can
+  # use repeatedly in your configuration files
+  # Orb commands and jobs help you with common scripting around a language/tool,
+  # so you don't have to copy and paste it everywhere.
   # See the orb documentation here: https://circleci.com/developer/orbs/orb/circleci/python
   python: circleci/python@1.2
 
@@ -26,8 +27,12 @@ jobs:
           name: check code
           command: |
             . venv/bin/activate
-            python -m compileall pymagento_rest samples
-            pycodestyle pymagento_rest samples
-            python -m flake8 pymagento_rest samples
-            python setup.py install --optimize=1 --root=build
-            ls -laR build
+            python -m compileall pymagento_rest
+            python -m pycodestyle pymagento_rest
+            python -m flake8 pymagento_rest
+            python -m build --outdir=dist .
+            python -m pip install --verbose dist/*.whl
+            python -m pip list
+            python -m pip freeze
+            ls -laR .
+            python -m pip uninstall --yes --verbose pymagento_rest

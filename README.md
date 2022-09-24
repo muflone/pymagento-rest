@@ -24,7 +24,7 @@ its REST API.
 # System Requirements
 
 * Python 3.x
-* Requests ( https://pypi.org/project/requests/ ) library for Python 3.x
+* Python Requests 2.28.x (https://pypi.org/project/requests/)
 
 # Usage
 
